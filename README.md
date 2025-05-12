@@ -13,7 +13,7 @@ A command-line Ruby application that allows you to:
 
    ```bash
    git clone git@github.com:esotericK18/client_directory.git
-   cd client
+   cd client_directory
    ```
 
 2. **Install dependencies**:
@@ -33,7 +33,7 @@ A command-line Ruby application that allows you to:
 5. (optional) Add project bin/ to your PATH (temporary for session)
 
    ```bash
-   export PATH="$PATH:/path/to/your/project/bin"
+   export PATH="$PATH:/client_directory/bin"
    ```
 
 ---
