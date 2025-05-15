@@ -90,7 +90,7 @@ rspec
 
 ---
 
-## Future Improvements and Know limitations
+## Future Improvements
 
 - Dynamic field search
 - Full CRUD implementation
