@@ -76,7 +76,7 @@ rspec
 
 ## Assumptions & Design Decisions
 
-- JSON is expected to be an array of objects with: `id`, `name`, and `email` same as the provided json file
+- JSON is expected to be an array of objects with: `id`, `full_name`, and `email` same as the provided json file
 - Initially create the core logic on single file then proceed to implementing repository pattern and adjust project structure for ease of script execution
 - Logic is split into repository and services for modularity and testability
 
