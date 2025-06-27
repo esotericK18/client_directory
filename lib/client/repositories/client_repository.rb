@@ -7,7 +7,7 @@ require_relative '../parsers/json_parser'
 module Client
   module Repositories
     class ClientRepository
-      def initialize(file_path = '/project/client/clients.json')
+      def initialize(file_path = 'lib/data/clients.json')
         @clients = Parsers::JsonParser.new(file_path).parse.map do |data|
           Models::Client.new(
             id: data['id'],
