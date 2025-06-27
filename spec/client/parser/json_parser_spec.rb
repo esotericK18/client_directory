@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../../spec_helper'
 require 'json'
-require_relative '../../lib/client/parsers/json_parser'
+require_relative '../../spec_helper'
+require_relative '../../../lib/client/parsers/json_parser'
 
 describe Client::Parsers::JsonParser do
   before do
