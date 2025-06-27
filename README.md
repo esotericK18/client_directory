@@ -30,12 +30,6 @@ A command-line Ruby application that allows you to:
 
 4. **Ensure `clients.json` is present** in the root directory (or provide your own).
 
-5. (optional) Add project bin/ to your PATH (temporary for session)
-
-   ```bash
-   export PATH="$PATH:/client_directory/bin"
-   ```
-
 ---
 
 ## Usage
@@ -46,22 +40,10 @@ A command-line Ruby application that allows you to:
 ./bin/client search John
 ```
 
-or When you add bin to PATH
-
-```bash
-client search John
-```
-
 ### Find duplicate emails
 
 ```bash
 ./bin/client duplicates
-```
-
-or When you add bin to PATH
-
-```bash
-client duplicates
 ```
 
 ---
@@ -69,7 +51,7 @@ client duplicates
 ## 🧪 Running Tests
 
 ```bash
-rspec
+rspec spec/
 ```
 
 ---
