@@ -10,9 +10,11 @@ describe Client::CLI do
   let(:client2) { Client::Models::Client.new(id: 2, name: 'Johnny Smith', email: 'john@example.com') }
 
   before do
-    allow_any_instance_of(Client::Services::SearchClientsService).to receive(:call).and_return([client1, client2])
-    allow_any_instance_of(Client::Services::FindDuplicateEmailsService)
-      .to receive(:call)
+    allow_any_instance_of(Client::Services::ClientService)
+      .to receive(:find_by_partial_name)
+      .and_return([client1, client2])
+    allow_any_instance_of(Client::Services::ClientService)
+      .to receive(:find_duplicates_by_email)
       .and_return(
         {
           'john@example.com' => [client1, client2]
@@ -48,13 +50,13 @@ describe Client::CLI do
   end
 
   it 'prints no clients found message if search returns empty' do
-    allow_any_instance_of(Client::Services::SearchClientsService).to receive(:call).and_return([])
+    allow_any_instance_of(Client::Services::ClientService).to receive(:find_by_partial_name).and_return([])
     output = capture_stdout { described_class.start(%w[search zzz]) }
     expect(output).to include("No clients found with name containing 'zzz'.")
   end
 
   it 'prints no duplicates found if none exist' do
-    allow_any_instance_of(Client::Services::FindDuplicateEmailsService).to receive(:call).and_return({})
+    allow_any_instance_of(Client::Services::ClientService).to receive(:find_duplicates_by_email).and_return({})
     output = capture_stdout { described_class.start(['duplicates']) }
     expect(output).to include('No duplicates found.')
   end
@@ -65,14 +67,14 @@ describe Client::CLI do
   end
 
   it 'prints fallback if search query is empty' do
-    allow_any_instance_of(Client::Services::SearchClientsService).to receive(:call).with('').and_return([])
+    allow_any_instance_of(Client::Services::ClientService).to receive(:find_by_partial_name).with('').and_return([])
     output = capture_stdout { described_class.start(['search']) }
     expect(output).to include("No clients found with name containing ''.")
   end
 
   it 'handles extra whitespace in arguments' do
-    allow_any_instance_of(Client::Services::SearchClientsService)
-      .to receive(:call).with('   john   doe  ').and_return([client1])
+    allow_any_instance_of(Client::Services::ClientService)
+      .to receive(:find_by_partial_name).with('   john   doe  ').and_return([client1])
     output = capture_stdout { described_class.start(['search', '   john   doe  ']) }
     expect(output).to include('John Doe (john@example.com)')
   end
