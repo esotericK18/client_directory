@@ -8,26 +8,22 @@ describe Client::Services::ClientService do
   let(:mock_repo) do
     double('ClientRepository').tap do |repo|
       allow(repo)
-        .to receive(:find_duplicates_by_email)
-        .and_return({ 'dup@example.com' => [client1, client2] })
-      allow(repo)
-        .to receive(:find_by_partial_name)
-        .with('rick')
-        .and_return([client1])
+        .to receive(:all)
+        .and_return([client1, client2])
     end
   end
 
-  it 'returns duplicated clients grouped by email' do
+  it 'finds clients by partial name' do
     service = described_class.new(mock_repo)
-    result = service.find_duplicates_by_email
-    expect(result['dup@example.com'].size).to eq(2)
-    expect(result['dup@example.com']).to include(client1, client2)
-  end
-
-  it 'calls repository and returns matched clients' do
-    service = described_class.new(mock_repo)
-    result = service.find_by_partial_name('rick')
+    result = service.find_by_partial_name('Rick')
     expect(result.size).to eq(1)
     expect(result.first.name).to eq('Rick')
+  end
+
+  it 'finds duplicates by email' do
+    service = described_class.new(mock_repo)
+    duplicates = service.find_duplicates_by_email
+    expect(duplicates.size).to eq(1)
+    expect(duplicates['dup@example.com']).to include(client1, client2)
   end
 end

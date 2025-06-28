@@ -20,16 +20,6 @@ module Client
       def all
         @clients
       end
-
-      def find_by_partial_name(query)
-        @clients.select { |client| client.name.downcase.include?(query.downcase) }
-      end
-
-      def find_duplicates_by_email
-        grouped = @clients.group_by { |client| client.email.downcase }
-
-        grouped.select { |_, clients| clients.size > 1 }
-      end
     end
   end
 end

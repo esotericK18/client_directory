@@ -33,13 +33,10 @@ describe Client::Repositories::ClientRepository do
     expect(clients.map(&:name)).to include('John Doe', 'Jane Smith')
   end
 
-  it 'finds clients by partial name' do
-    results = repo.find_by_partial_name('john')
-    expect(results.map(&:name)).to include('John Doe', 'Johnny Appleseed')
-  end
-
-  it 'finds duplicate emails' do
-    duplicates = repo.find_duplicates_by_email
-    expect(duplicates.keys).to include('john@example.com', 'duplicate@example.com')
+  it 'returns all clients' do
+    results = repo.all
+    expect(results.map(&:name)).to include('John Doe', 'Jane Smith', 'Johnny Appleseed')
+    expect(results.map(&:email)).to include('john@example.com', 'jane@example.com', 'duplicate@example.com')
+    expect(results.size).to eq(5)
   end
 end
